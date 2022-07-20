@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Add Sever</title>	
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="stylesheet" type="text/css" href="./fonts.css">
+</head>
+
+<body class="h-screen  flex  w-full dark:bg-gray-800 text-gray-600 dark:text-gray-400  ">
+	
+		<form  id="form" class="flex flex-col justify-center w-full  px-6 py-2">
+			
+			<input 
+			class="w-full block px-4 py-4 border dark:border-blue-600 rounded mb-3 focus:outline-0 focus:border-blue-600 text-base dark:bg-gray-900 font-semibold" 
+			type="text" id="label" name="name" placeholder="label" required/>
+
+			<input 
+			class="w-full block px-4 py-4 border dark:border-blue-600 rounded mb-3 focus:outline-0 focus:border-blue-600 text-base dark:bg-gray-900 font-semibold" 
+			type="url" id="url" name="url" placeholder="url" required/>
+
+			<!-- Button Area -->
+			<div class="buttons w-full flex flex-row justify-end">
+				<div>
+					<input type="submit" id="submitForm" class="bg-blue-600 rounded-full text-white px-12 py-3 border-0 font-semibold cursor-pointer" value="Add">
+				</div>
+			</div>
+			<!-- End of Button Area -->
+		</form>
+		<script>
+			
+			const {ipcRenderer} = require('electron');
+
+			form = document.getElementById('form');
+
+			form.addEventListener('submit',(e) =>{
+
+				e.preventDefault();
+				label = document.getElementById('label');
+				url = document.getElementById('url');
+
+				if(label.value && url.value){
+					ipcRenderer.send('addServer',[label.value,url.value]);
+					label.value = '';
+					url.value = '';
+				}
+
+			});
+		</script>
+	
+</body>
+</html>
